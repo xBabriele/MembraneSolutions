@@ -1,0 +1,65 @@
+.lc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color .3s;
+}
+
+.lc-h {
+    padding: 11px 15px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lc-n {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.lc-b {
+    padding: 13px 15px;
+}
+
+.lc-r {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 11.5px;
+}
+
+.lc-r:last-child {
+    border-bottom: none;
+}
+
+.lc-l {
+    color: var(--t3);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+}
+
+.lc-v {
+    color: var(--t1);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+}
+
+.lc-p {
+    height: 3px;
+    background: var(--bg-el);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 9px;
+}
+
+.lc-pb {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.5s ease;
+}

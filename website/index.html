@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="keywords" content="IOT, Industria, 4.0">
+<meta name="description" content="Simple Website Of Out 4.0 Industry">
+<meta http-equiv="author" content="Gabriel Madiotto, Raul Cociug, Filippo Cagnin, Lorenzo Poli">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Membrane Solutions</title>
+<link type="image/png" sizes="32x32" rel="icon" href="imgs/favicon.png">
+
+<link rel="stylesheet" type="text/css" href="css/kpi.css">
+<link rel="stylesheet" type="text/css" href="css/feed.css">
+<link rel="stylesheet" type="text/css" href="css/form.css">
+<link rel="stylesheet" type="text/css" href="css/toast.css">
+<link rel="stylesheet" type="text/css" href="css/chart.css">
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/pages.css">
+<link rel="stylesheet" type="text/css" href="css/panel.css">
+<link rel="stylesheet" type="text/css" href="css/query.css">
+<link rel="stylesheet" type="text/css" href="css/tables.css">
+<link rel="stylesheet" type="text/css" href="css/badges.css">
+<link rel="stylesheet" type="text/css" href="css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="css/line_card.css">
+<link rel="stylesheet" type="text/css" href="css/sensor_card.css">
+<link rel="stylesheet" type="text/css" href="css/alert_strip.css">
+<link rel="stylesheet" type="text/css" href="css/section_title.css">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" >
+<style>
+  :root {
+    --bg-base:#0d0f12;
+    --bg-panel:#13161b;
+    --bg-card:#191d24;
+    --bg-el:#1e242d;
+
+    --border:#252b35;
+    --border-b:#303848;
+
+    --amber:#f59e0b;
+    --amber-dim:#b97a08;
+    --amber-glow:rgba(245,158,11,.12);
+
+    --cyan:#22d3ee;
+    --red:#ef4444;
+    --red-glow:rgba(239,68,68,.12);
+    --green:#22c55e;
+    --purple:#a78bfa;
+
+    --t1:#e8eaed;
+    --t2:#8b95a6;
+    --t3:#4a5568;
+    --mono:#a8c5d8;
+    --sw:240px;
+    --th:56px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-box">
+
+    <div class="login-logo">
+      Membrane<br>Solutions
+    </div>
+
+    <div class="login-sub">Gestionale 4.0 — Accesso Sicuro</div>
+
+    <div class="login-err" id="lerr">
+      <i class="bi bi-exclamation-triangle-fill"></i> Credenziali non valide
+    </div>
+
+    <div class="login-label">
+      <i class="bi bi-person-fill" style="color: var(--amber)"></i> Username
+    </div>
+    <input class="login-input" id="l-user" placeholder="Inserisci username" autocomplete="off">
+
+    <div class="login-label">
+      <i class="bi bi-lock-fill" style="color: var(--amber)"></i> Password
+    </div>
+    <input class="login-input" id="l-pass" type="password" placeholder="Inserisci password">
+
+    <button class="login-btn" id="l-btn">
+      <i class="bi bi-box-arrow-in-right"></i> Accedi
+    </button>
+
+    <div class="login-hint">
+      <strong style="color: var(--t2)">Account disponibili:</strong><br>
+      Admin &nbsp;→ <span>admin</span> / <span>admin123</span><br>
+      Operaio → <span>operaio1</span> / <span>pass123</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- APP -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+
+    <div class="sl">
+      <div class="brand">Membrane<br>Solutions</div>
+      <div class="sub">Gestionale 4.0</div>
+    </div>
+
+    <div class="sn" id="sidebar-nav"></div>
+
+    <div class="sf">
+      <div class="av" id="sf-av">--</div>
+      <div style="flex: 1; min-width: 0">
+        <div class="un" id="sf-un">--</div>
+        <div class="ur" id="sf-ur">--</div>
+      </div>
+      <i class="bi bi-box-arrow-right"
+         style="color: var(--t3); cursor: pointer; font-size: 14px"
+         id="btn-logout"
+         title="Logout">
+      </i>
+    </div>
+
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <span id="pt">Dashboard</span>
+      <div class="t-badge">
+        <span class="dot" id="sim-dot"></span>
+        <span id="sim-label">SIM ATTIVA</span>
+      </div>
+      <div class="t-badge">
+        <i class="bi bi-database" style="color: var(--amber); font-size: 11px"></i>
+        <span id="t-qc">0</span>&nbsp;query
+      </div>
+      <button id="btn-stop">
+        <i class="bi bi-stop-fill" id="stop-ico"></i>
+        <span id="stop-lbl">STOP</span>
+      </button>
+      <div class="tc" id="clock">--:--:--</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+
+        <div id="dash-alert-wrap" class="mb-3"></div>
+
+        <div class="st"><i class="bi bi-speedometer2"></i>KPI Produzione</div>
+
+        <div class="row g-2 mb-3">
+
+          <div class="col" style="min-width: 140px">
+            <div class="kpi am">
+              <i class="bi bi-thermometer-half ki"></i>
+              <div class="kpi-l">Temp. Media</div>
+              <div class="kpi-v"><span id="k-temp">25.0</span><span class="u">°C</span></div>
+              <div class="kpi-s">Miscelatore A</div>
+            </div>
+          </div>
+
+          <div class="col" style="min-width: 140px">
+            <div class="kpi re">
+              <i class="bi bi-exclamation-triangle-fill ki"></i>
+              <div class="kpi-l">Anomalie Attive</div>
+              <div class="kpi-v" id="k-anom">1</div>
+              <div class="kpi-s" id="k-anom-sub">sensori fuori soglia</div>
+            </div>
+          </div>
+
+          <div class="col" style="min-width: 140px">
+            <div class="kpi gr">
+              <i class="bi bi-diagram-3-fill ki"></i>
+              <div class="kpi-l">Linee Attive</div>
+              <div class="kpi-v">5<span class="u">/5</span></div>
+              <div class="kpi-s">Tutte operative</div>
+            </div>
+          </div>
+
+          <div class="col" style="min-width: 140px">
+            <div class="kpi cy">
+              <i class="bi bi-cart-fill ki"></i>
+              <div class="kpi-l">Ordini Attivi</div>
+              <div class="kpi-v" id="k-oa">5</div>
+              <div class="kpi-s">acquisto in corso</div>
+            </div>
+          </div>
+
+          <div class="col" style="min-width: 140px">
+            <div class="kpi pu">
+              <i class="bi bi-currency-euro ki"></i>
+              <div class="kpi-l">Fatturato Oggi</div>
+              <div class="kpi-v"><span id="k-fatt">1300</span><span class="u">€</span></div>
+              <div class="kpi-s">5 ordini vendita</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row g-3 mb-3">
+
+          <!-- Chart principale -->
+          <div class="col-lg-8">
+            <div class="panel" style="height: 100%">
+              <div class="ph">
+                <i class="bi bi-activity ta"></i>
+                <span class="ph-t">Sensori — Letture Live</span>
+                <span class="dot g ms-auto"></span>
+                <span style="font-size: 9.5px; color: var(--t3); font-family: 'Share Tech Mono', monospace; margin-left: 4px">
+                  AGG. 2.5s
+                </span>
+              </div>
+              <div class="pb">
+                <div class="ch-lg"><canvas id="chartMain"></canvas></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sensor cards laterali -->
+          <div class="col-lg-4">
+            <div class="row g-2">
+
+              <div class="col-12">
+                <div class="sc" id="dsc-temp">
+                  <div class="sc-h">
+                    <div>
+                      <div class="sc-n ta"><i class="bi bi-thermometer-half"></i> Temperatura</div>
+                      <div style="font-size: 10px; color: var(--t3); font-family: 'Share Tech Mono', monospace">
+                        Miscelatore A · 1.5Hz
+                      </div>
+                    </div>
+                    <div style="text-align: right">
+                      <span class="sc-v ta" id="sv-temp">25.0</span>
+                      <span class="sc-u">°C</span>
+                    </div>
+                  </div>
+                  <div class="sc-bw">
+                    <div class="sc-b" id="sb-temp" style="width: 50%; background: var(--amber)"></div>
+                  </div>
+                  <div class="sc-m"><span>0°C</span><span>50°C</span></div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="sc" id="dsc-pres">
+                  <div class="sc-h">
+                    <div>
+                      <div class="sc-n tc2"><i class="bi bi-speedometer2"></i> Pressione</div>
+                      <div style="font-size: 10px; color: var(--t3); font-family: 'Share Tech Mono', monospace">
+                        Miscelatore B · 2.0Hz
+                      </div>
+                    </div>
+                    <div style="text-align: right">
+                      <span class="sc-v tc2" id="sv-pres">1.2</span>
+                      <span class="sc-u">Bar</span>
+                    </div>
+                  </div>
+                  <div class="sc-bw">
+                    <div class="sc-b" id="sb-pres" style="width: 40%; background: var(--cyan)"></div>
+                  </div>
+                  <div class="sc-m"><span>0</span><span>3 Bar</span></div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="sc" id="dsc-umid">
+                  <div class="sc-h">
+                    <div>
+                      <div class="sc-n" id="dsc-umid-name" style="color: var(--red)">
+                        <i class="bi bi-droplet-fill"></i> Umidità
+                      </div>
+                      <div style="font-size: 10px; color: var(--t3); font-family: 'Share Tech Mono', monospace">
+                        L. Etichettatura · 1.0Hz
+                      </div>
+                    </div>
+                    <div style="text-align: right">
+                      <span class="sc-v" id="sv-umid" style="color: var(--red)">80</span>
+                      <span class="sc-u">%</span>
+                    </div>
+                  </div>
+                  <div class="sc-bw">
+                    <div class="sc-b" id="sb-umid" style="width: 80%; background: var(--red)"></div>
+                  </div>
+                  <div class="sc-m"><span>0%</span><span>100%</span></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col-lg-6">
+            <div class="panel">
+              <div class="ph">
+                <i class="bi bi-cart-fill ta"></i>
+                <span class="ph-t">Ultimi Ordini Acquisto</span>
+                <span class="dot a ms-auto"></span>
+              </div>
+              <table class="dt">
+                <thead>
+                  <tr>
+                    <th>Ordine</th>
+                    <th>Fornitore</th>
+                    <th>Totale</th>
+                    <th>Stato</th>
+                  </tr>
+                </thead>
+                <tbody id="tb-oa-d"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="panel">
+              <div class="ph">
+                <i class="bi bi-truck ta"></i>
+                <span class="ph-t">Ultimi Ordini Vendita</span>
+                <span class="dot a ms-auto"></span>
+              </div>
+              <table class="dt">
+                <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>Cliente</th>
+                    <th>Totale</th>
+                    <th>Pagamento</th>
+                  </tr>
+                </thead>
+                <tbody id="tb-ov-d"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div><!-- /page-dashboard -->
+
+
+      <!-- PAGE: SENSORI -->
+      <div class="page" id="page-sensori">
+
+        <div class="st"><i class="bi bi-broadcast-pin"></i>Sensori in Tempo Reale — 5 Unità</div>
+
+        <div class="row g-3 mb-4" id="sensor-full"></div>
+
+        <div class="panel">
+          <div class="ph" style="justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <i class="bi bi-table ta"></i>
+              <span class="ph-t">Storico Letture</span>
+              <span class="bs am ms-2" id="storico-count">0 righe</span>
+            </div>
+            <div style="display: flex; gap: 6px">
+              <select class="fc" style="width: 140px" id="f-tipo">
+                <option value="">Tutti</option>
+                <option>Temperatura</option>
+                <option>Pressione</option>
+                <option>Velocità</option>
+                <option>Umidità</option>
+                <option>Flusso</option>
+              </select>
+              <select class="fc" style="width: 120px" id="f-anom">
+                <option value="">Tutti</option>
+                <option value="1">Solo anomalie</option>
+              </select>
+            </div>
+          </div>
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Sensore</th>
+                <th>Tipo</th>
+                <th>Valore</th>
+                <th>Unità</th>
+                <th>Macchinario</th>
+                <th>IP</th>
+                <th>Anomalia</th>
+              </tr>
+            </thead>
+            <tbody id="tb-storico"></tbody>
+          </table>
+        </div>
+
+      </div><!-- /page-sensori -->
+
+
+      <!-- PAGE: LINEE -->
+      <div class="page" id="page-linee">
+        <div class="st"><i class="bi bi-diagram-3-fill"></i>Linee di Produzione</div>
+        <div class="row g-3" id="linee-cards"></div>
+      </div>
+
+
+      <!-- PAGE: MAGAZZINO -->
+      <div class="page" id="page-magazzino">
+
+        <div class="row g-2 mb-3">
+
+          <div class="col-4">
+            <div class="kpi am">
+              <i class="bi bi-box-seam ki"></i>
+              <div class="kpi-l">Materiali Disponibili</div>
+              <div class="kpi-v" id="k-mat-ok">3</div>
+              <div class="kpi-s">su 5 totali</div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="kpi re">
+              <i class="bi bi-exclamation-circle ki"></i>
+              <div class="kpi-l">Scorta Critica</div>
+              <div class="kpi-v" id="k-mat-crit">2</div>
+              <div class="kpi-s">soglia/esaurito</div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="kpi cy">
+              <i class="bi bi-layers-fill ki"></i>
+              <div class="kpi-l">Miscele Pronte</div>
+              <div class="kpi-v" id="k-misc-pronte">3</div>
+              <div class="kpi-s">su 5 configurate</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="st"><i class="bi bi-box-seam-fill"></i>Materiali Base</div>
+        <div class="panel mb-4">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>Materiale</th>
+                <th>Costo Unitario</th>
+                <th>Scorta Min.</th>
+                <th>Fornitori</th>
+                <th>Stato</th>
+              </tr>
+            </thead>
+            <tbody id="tb-mat"></tbody>
+          </table>
+        </div>
+
+        <div class="st"><i class="bi bi-beaker-fill"></i>Miscele Configurate</div>
+        <div class="row g-3" id="miscele-cards"></div>
+
+      </div><!-- /page-magazzino -->
+
+
+      <!-- PAGE: ORDINI -->
+      <div class="page" id="page-ordini">
+
+        <div class="row g-2 mb-3">
+
+          <div class="col-3">
+            <div class="kpi am">
+              <i class="bi bi-cart-fill ki"></i>
+              <div class="kpi-l">Acquisto Attivi</div>
+              <div class="kpi-v" id="k-oa2">5</div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="kpi cy">
+              <i class="bi bi-truck ki"></i>
+              <div class="kpi-l">Vendite Totali</div>
+              <div class="kpi-v" id="k-ov2">5</div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="kpi gr">
+              <i class="bi bi-receipt ki"></i>
+              <div class="kpi-l">Fatture Pagate</div>
+              <div class="kpi-v" id="k-fatt-p">5</div>
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="kpi pu">
+              <i class="bi bi-currency-euro ki"></i>
+              <div class="kpi-l">Fatturato Mese</div>
+              <div class="kpi-v"><span id="k-fatt-m">0</span><span class="u">€</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="panel mb-3">
+          <div class="ph">
+            <i class="bi bi-bar-chart-fill ta"></i>
+            <span class="ph-t">Fatturato Giornaliero — Ultimi 30 giorni</span>
+          </div>
+          <div class="pb">
+            <div class="ch"><canvas id="chartRev"></canvas></div>
+          </div>
+        </div>
+
+        <div class="panel mb-3">
+          <div class="ph" style="justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <i class="bi bi-cart-fill ta"></i>
+              <span class="ph-t">Ordini di Acquisto</span>
+              <span class="dot a ms-2"></span>
+            </div>
+            <button class="btn-a" onclick="sim.force('NEW_OA')">
+              <i class="bi bi-plus-lg"></i>Nuovo Ordine
+            </button>
+          </div>
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>N° Ordine</th>
+                <th>Data</th>
+                <th>Fornitore</th>
+                <th>Consegna Prevista</th>
+                <th>Totale</th>
+                <th>Stato</th>
+              </tr>
+            </thead>
+            <tbody id="tb-oa-f"></tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <div class="ph" style="justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <i class="bi bi-truck ta"></i>
+              <span class="ph-t">Ordini di Vendita</span>
+              <span class="dot a ms-2"></span>
+            </div>
+            <button class="btn-a" onclick="sim.force('NEW_OV')">
+              <i class="bi bi-plus-lg"></i>Nuovo Ordine
+            </button>
+          </div>
+          <table class="dt">
+            <thead>
+              <tr>
+                <th>N° Ord.</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Totale</th>
+                <th>Fattura</th>
+                <th>Pagamento</th>
+              </tr>
+            </thead>
+            <tbody id="tb-ov-f"></tbody>
+          </table>
+        </div>
+
+      </div><!-- /page-ordini -->
+
+
+      <!-- PAGE: DIPENDENTI -->
+      <div class="page" id="page-dipendenti">
+
+        <div class="panel">
+          <div class="ph" style="justify-content: space-between">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <i class="bi bi-people-fill ta"></i>
+              <span class="ph-t">Anagrafica Dipendenti</span>
+            </div>
+            <input class="fc" placeholder="🔍 Cerca dipendente..." style="width: 190px" id="dip-s">
+          </div>
+          <table class="dt" id="t-dip">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Ruolo</th>
+                <th>Reparto</th>
+                <th>Linea</th>
+                <th>Email</th>
+                <th>Stato</th>
+                <th>Assunzione</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Mario</strong></td>
+                <td>Rossi</td>
+                <td class="m">IMPIEGATO</td>
+                <td><span class="bs info">Produzione Chimica</span></td>
+                <td class="m">L1</td>
+                <td class="m" style="font-size: 11px">m.rossi@azienda.it</td>
+                <td><span class="bs am">RIPOSO</span></td>
+                <td class="m">15/01/2022</td>
+              </tr>
+              <tr>
+                <td><strong>Lucia</strong></td>
+                <td>Bianchi</td>
+                <td class="m">IMPIEGATO</td>
+                <td><span class="bs info">Controllo Qualità</span></td>
+                <td class="m">L2</td>
+                <td class="m" style="font-size: 11px">l.bianchi@azienda.it</td>
+                <td><span class="bs am">RIPOSO</span></td>
+                <td class="m">10/06/2021</td>
+              </tr>
+              <tr>
+                <td><strong>Marco</strong></td>
+                <td>Verdi</td>
+                <td class="m">IMPIEGATO</td>
+                <td><span class="bs info">Logistica</span></td>
+                <td class="m">L3</td>
+                <td class="m" style="font-size: 11px">m.verdi@azienda.it</td>
+                <td><span class="bs ok">LAVORO</span></td>
+                <td class="m">01/03/2023</td>
+              </tr>
+              <tr>
+                <td><strong>Elena</strong></td>
+                <td>Neri</td>
+                <td class="m">RESPONSABILE</td>
+                <td><span class="bs info">Magazzino</span></td>
+                <td class="m">L4</td>
+                <td class="m" style="font-size: 11px">e.neri@azienda.it</td>
+                <td><span class="bs am">RIPOSO</span></td>
+                <td class="m">05/12/2020</td>
+              </tr>
+              <tr>
+                <td><strong>Paolo</strong></td>
+                <td>Gialli</td>
+                <td class="m">IMPIEGATO</td>
+                <td><span class="bs info">Amministrazione</span></td>
+                <td class="m">L5</td>
+                <td class="m" style="font-size: 11px">p.gialli@azienda.it</td>
+                <td><span class="bs ok">LAVORO</span></td>
+                <td class="m">17/09/2019</td>
+              </tr>
+              <tr>
+                <td><strong>Sara</strong></td>
+                <td>Conti</td>
+                <td class="m">OPERAIO</td>
+                <td><span class="bs info">Produzione Chimica</span></td>
+                <td class="m">L1</td>
+                <td class="m" style="font-size: 11px">s.conti@azienda.it</td>
+                <td><span class="bs ok">LAVORO</span></td>
+                <td class="m">22/04/2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /page-dipendenti -->
+
+
+      <!-- PAGE: ATTIVITÀ -->
+      <div class="page" id="page-attivita">
+
+        <div class="row g-3">
+
+          <div class="col-lg-8">
+            <div class="qterm">
+              <div class="qth">
+                <span style="font-size: 13px; color: var(--amber)">⬡</span>
+                <span class="title">MEMBRANE_SOLUTIONS — Query Log</span>
+                <span class="db">InnoDB · AUTO_COMMIT</span>
+                <div class="sts">
+                  <div>Eseguite:&nbsp;<span id="at-tot">0</span></div>
+                  <div>Errori:&nbsp;<span id="at-err" style="color: var(--red)">0</span></div>
+                  <div>In corso:&nbsp;<span id="at-run">0</span></div>
+                  <div style="color: var(--amber)" id="at-pm">0 q/min</div>
+                </div>
+              </div>
+              <div class="qfeed" id="q-feed" style="max-height: 500px; background: #080a0d"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="panel mb-3">
+              <div class="ph">
+                <i class="bi bi-bar-chart-fill ta"></i>
+                <span class="ph-t">Query / Minuto</span>
+              </div>
+              <div class="pb">
+                <div class="ch"><canvas id="chartQpm"></canvas></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="ph">
+                <i class="bi bi-clock-history ta"></i>
+                <span class="ph-t">Ultimi Eventi</span>
+              </div>
+              <div id="act-feed" style="max-height: 280px; overflow-y: auto"></div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div><!-- /page-attivita -->
+
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<div id="toast-c"></div>
+
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+RewriteBase /
+
+# Route everything through index.html (SPA style) except real files
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

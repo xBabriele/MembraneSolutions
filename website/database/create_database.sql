@@ -1,0 +1,408 @@
+CREATE TABLE IF NOT EXISTS CATEGORIE_PRODOTTO (
+    idCategoria INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    nomeCategoria TINYTEXT NOT NULL,
+    attiva BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS MISCELE (
+    idMiscela INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    nomeMiscela TINYTEXT NOT NULL,
+    statoMiscela VARCHAR(50) NOT NULL DEFAULT 'NON PRONTO', 
+    tempoMiscelazione INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS MATERIALI_BASE (
+    idMaterialeBase INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    nomeMateriale TINYTEXT NOT NULL,
+    costoUnitarioMedio DECIMAL(10,2),
+    scortaMinima INTEGER NOT NULL,
+    fornitoriDisponibili INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS COMPONE (
+    idMiscela INTEGER NOT NULL,
+    idMaterialeBase INTEGER NOT NULL,
+
+    CONSTRAINT pkCompone
+    PRIMARY KEY (idMiscela, idMaterialeBase),
+
+    CONSTRAINT FkMiscela
+    FOREIGN KEY (idMiscela)
+    REFERENCES MISCELE(idMiscela)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    CONSTRAINT FkMaterialiBase
+    FOREIGN KEY (idMaterialeBase)
+    REFERENCES MATERIALI_BASE(idMaterialeBase)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FORNITORI (
+    idFornitore INT PRIMARY KEY AUTO_INCREMENT,
+
+    ragioneSociale TINYTEXT NOT NULL,
+    partitaIVA VARCHAR(11) UNIQUE NOT NULL,
+    indirizzo TINYTEXT NOT NULL,
+    citta TINYTEXT NOT NULL,
+    provincia TINYTEXT NOT NULL,
+    CAP VARCHAR(5) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefonoReferente TINYTEXT NOT NULL,
+    nomeReferente TINYTEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CATALOGO_FORNITORI (
+    idCatalogo INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    codiceFornitore TINYTEXT NOT NULL,
+    tempoConsegna DATETIME NOT NULL,
+    valuta VARCHAR(20) NOT NULL DEFAULT 'EURO',
+    prezzoUnitario DECIMAL(10,2),
+    preferito BOOLEAN NOT NULL DEFAULT FALSE,
+
+    idFornitoreCatalogo INTEGER NOT NULL,
+    CONSTRAINT FkFornitoriCatalogo
+    FOREIGN KEY (idFornitoreCatalogo)
+    REFERENCES FORNITORI(idFornitore)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idMaterialeBaseCatologo INTEGER NOT NULL,
+    CONSTRAINT FkMaterialicataloto
+    FOREIGN KEY (idMaterialeBaseCatologo)
+    REFERENCES MATERIALI_BASE(idMaterialeBase)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ORDINI_ACQUISTO (
+    idOrdineAcquisto INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    numeroOrdine VARCHAR(50),
+    dataOrdine DATE,
+    dataConsegnaPrevista DATE,
+    dataConsegnaEffettiva DATE,
+    statoOrdine VARCHAR(50),
+    totaleOrdine DECIMAL(12,2),
+
+    idFornitoreOrdini INTEGER NOT NULL,
+    CONSTRAINT FkFornitoreOrdini
+    FOREIGN KEY (idFornitoreOrdini)
+    REFERENCES FORNITORI(idFornitore)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS RIGHE_ORDINE (
+    idRigaOrdine INT PRIMARY KEY,
+
+    quantita INT NOT NULL,
+    prezzoUnitario DECIMAL(10,2),
+    sconto DECIMAL(5,2),
+
+    idOrdineAcquisto INTEGER NOT NULL,
+    CONSTRAINT FkOrdiniRighe
+    FOREIGN KEY (idOrdineAcquisto)
+    REFERENCES ORDINI_ACQUISTO(idOrdineAcquisto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idMaterialeBase INTEGER NOT NULL,
+    CONSTRAINT FkMaterialeRighe
+    FOREIGN KEY (idMaterialeBase)
+    REFERENCES MATERIALI_BASE(idMaterialeBase)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FATTURE_ACQUISTO (
+    idFatturaAcquisto INT PRIMARY KEY,
+    numeroFattura VARCHAR(50),
+    dataPagamento DATE,
+    dataScadenzaPagamento DATE,
+    totaleFattura DECIMAL(12,2),
+    IVATotale DECIMAL(10,2),
+
+    idOrdineAcquistoFatture INTEGER UNIQUE NOT NULL,
+    CONSTRAINT FkOrdineAcquistoFatture
+    FOREIGN KEY (idOrdineAcquistoFatture)
+    REFERENCES ORDINI_ACQUISTO(idOrdineAcquisto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS REPARTI (
+    idReparto INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    attivo BOOLEAN NOT NULL DEFAULT TRUE,
+    nomeReparto TEXT NOT NULL,
+    VLAN INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS MAGAZZINI (
+    idMagazzino INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    attivo BOOLEAN NOT NULL DEFAULT TRUE,
+    nomeMagazzino TEXT NOT NULL,
+    tipoMagazzino TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS VLAN_AUTORIZZATE (
+    idVLAN INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    numeroVLAN INTEGER NOT NULL,
+    dataEntrata DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS LINEE_PRODUZIONE (
+    idLinea INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    statoLinea VARCHAR(20) NOT NULL DEFAULT 'ATTIVO',
+    numeroLinea INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS UTENTI_SISTEMI (
+    idUtente INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    ruoloSistema VARCHAR(20) NOT NULL DEFAULT 'USER',
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+
+    idVLAN INTEGER NOT NULL,
+    FOREIGN KEY (idVLAN)
+    REFERENCES VLAN_AUTORIZZATE(idVLAN)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS DIPENDENTI (
+    idDipendente INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    dataAssunzione DATETIME NOT NULL,
+    dataNascita DATETIME NOT NULL,
+    fiscale VARCHAR(16) NOT NULL,
+    cognome TEXT NOT NULL,
+    nome TEXT NOT NULL,
+
+    ruolo VARCHAR(50) NOT NULL DEFAULT 'IMPIEGATO',
+    stato VARCHAR(50) NOT NULL DEFAULT 'RIPOSO',
+    email VARCHAR(255) UNIQUE NOT NULL,
+    telefono TEXT NOT NULL,
+
+    idReparto INTEGER NOT NULL,
+    FOREIGN KEY (idReparto)
+    REFERENCES REPARTI(idReparto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idMagazzino INTEGER NOT NULL,
+    FOREIGN KEY (idMagazzino)
+    REFERENCES MAGAZZINI(idMagazzino)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idLinea INTEGER NOT NULL,
+    FOREIGN KEY (idLinea)
+    REFERENCES LINEE_PRODUZIONE(idLinea)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idUtente INTEGER NOT NULL,
+    FOREIGN KEY (idUtente)
+    REFERENCES UTENTI_SISTEMI(idUtente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS LOTTI_PRODUZIONI (
+    idLotto INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    statoLotto VARCHAR(20) NOT NULL DEFAULT 'ATTIVO',
+    esitoLotto BOOLEAN DEFAULT FALSE,
+
+    idLineaLotto INTEGER NOT NULL,
+    FOREIGN KEY (idLineaLotto)
+    REFERENCES LINEE_PRODUZIONE(idLinea)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS MACCHINARI (
+    idMacchina INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    protocolloComunicazione VARCHAR(20) NOT NULL DEFAULT 'TCP/UDP',
+    portaComunicazione INTEGER NOT NULL,
+    nomeMacchina TEXT NOT NULL,
+    modello TEXT NOT NULL,
+    VLAN INTEGER NOT NULL,
+
+    idLineaMacchina INTEGER NOT NULL,
+    CONSTRAINT FkLineeProduzione
+    FOREIGN KEY(idLineaMacchina)
+    REFERENCES LINEE_PRODUZIONE(idLinea)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS DISPOSITIVI_RETE (
+    idDispositivo INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    statoDispositivo VARCHAR(20) NOT NULL DEFAULT 'ATTIVO',
+    codiceDispositivo TEXT NOT NULL,
+    tipoDispositivo TEXT NOT NULL,
+    numeroPorte INTEGER NOT NULL,
+    numeroVLAN INTEGER NOT NULL,
+    produttore TEXT NOT NULL,
+
+    idMacchinaRete INTEGER NOT NULL,
+    CONSTRAINT FkRete
+    FOREIGN KEY(idMacchinaRete)
+    REFERENCES MACCHINARI(idMacchina)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS SENSORI_IT (
+    idSensore INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    attivo BOOLEAN NOT NULL DEFAULT TRUE,
+    frequenzaLettura REAL NOT NULL,
+    unitaDiMisura TEXT NOT NULL,
+    tipoSensore TEXT NOT NULL,
+    indirizzoIP TEXT NOT NULL,
+
+    idMacchinaSensori INTEGER NOT NULL,
+    CONSTRAINT FkMacchinaSensori
+    FOREIGN KEY (idMacchinaSensori)
+    REFERENCES MACCHINARI (idMacchina)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idDispositivoSensori INTEGER NOT NULL,
+    CONSTRAINT DispositiviSensori
+    FOREIGN KEY (idDispositivoSensori)
+    REFERENCES DISPOSITIVI_RETE (idDispositivo)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS LETTURE_SENSORI (
+    idLettura INTEGER PRIMARY KEY AUTO_INCREMENT,
+    timeStampLettura DATETIME NOT NULL,
+    anomalia BOOLEAN DEFAULT FALSE,
+    valore REAL,
+
+    idSensore INTEGER NOT NULL,
+    CONSTRAINT FkSensori
+    FOREIGN KEY(idSensore)
+    REFERENCES SENSORI_IT(idSensore)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS CLIENTI (
+    idCliente INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    telefono VARCHAR(20) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    cognome TINYTEXT NOT NULL,
+    nome TINYTEXT NOT NULL,
+
+    partitaIVA VARCHAR(11) NOT NULL,
+    CAP VARCHAR(5) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS PRODOTTI (
+    idProdotto INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    idCategoriaProdotto INTEGER NOT NULL,
+    CONSTRAINT FkCategoriaProdotto
+    FOREIGN KEY (idCategoriaProdotto)
+    REFERENCES CATEGORIE_PRODOTTO(idCategoria)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idMiscelaProdotto INTEGER NOT NULL,
+    CONSTRAINT FkMiscelaProdotto
+    FOREIGN KEY (idMiscelaProdotto)
+    REFERENCES MISCELE(idMiscela)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idLottoProdotto INTEGER NOT NULL,
+    CONSTRAINT FkLottoProdotto
+    FOREIGN KEY (idLottoProdotto)
+    REFERENCES LOTTI_PRODUZIONI(idLotto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ORDINE_VENDITA (
+    numeroOrdine INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    totaleOrdine INTEGER NOT NULL,
+    dataOrdine DATETIME NOT NULL,
+
+    idCliente INTEGER NOT NULL,
+    CONSTRAINT FkClienti
+    FOREIGN KEY(idCliente)
+    REFERENCES CLIENTI(idCliente)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS RIGHE_ORDINE_VENDITA (
+    idRigaOrdine INTEGER PRIMARY KEY AUTO_INCREMENT,
+    prezzoUnitario INTEGER NOT NULL,
+    quantita INTEGER NOT NULL,
+
+    numeroOrdine INTEGER NOT NULL,
+    CONSTRAINT FkRigheOrdineVendita
+    FOREIGN KEY (numeroOrdine)
+    REFERENCES ORDINE_VENDITA (numeroOrdine)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+    idProdottoRighe INTEGER NOT NULL,
+    CONSTRAINT FkProdottoRighe
+    FOREIGN KEY (idProdottoRighe)
+    REFERENCES PRODOTTI(idProdotto)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS FATTURE_VENDITA (
+    numeroFattura INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    dataScadenzaPagamento DATETIME NOT NULL,
+    dataEmissione DATETIME NOT NULL,
+    totaleFattura INTEGER NOT NULL,
+
+    numeroOrdine INTEGER NOT NULL,
+    CONSTRAINT FkFattureOrdineVendita
+    FOREIGN KEY (numeroOrdine)
+    REFERENCES ORDINE_VENDITA(numeroOrdine)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS PAGAMENTI (
+    idPagamento INTEGER PRIMARY KEY AUTO_INCREMENT,
+
+    riferimentoTransazione VARCHAR(255) UNIQUE NOT NULL,
+    importPagamento INTEGER NOT NULL,
+    dataPagamento DATETIME NOT NULL,
+    metodoPagamento TEXT NOT NULL,
+
+    numeroFattura INTEGER NOT NULL,
+    CONSTRAINT FkFattureVendita
+    FOREIGN KEY (numeroFattura)
+    REFERENCES FATTURE_VENDITA(numeroFattura)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);

@@ -1,0 +1,65 @@
+.fc {
+    background: var(--bg-el);
+    border: 1px solid var(--border);
+    color: var(--t1);
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: 'Barlow', sans-serif;
+    outline: none;
+    transition: border-color .15s;
+    width: 100%;
+}
+
+.fc:focus {
+    border-color: var(--amber);
+}
+
+.fc option {
+    background: var(--bg-panel);
+}
+
+.btn-a {
+    background: var(--amber);
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: opacity .15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-a:hover {
+    opacity: .85;
+}
+
+.btn-g {
+    background: transparent;
+    color: var(--t2);
+    border: 1px solid var(--border);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all .15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-g:hover {
+    border-color: var(--border-b);
+    color: var(--t1);
+}

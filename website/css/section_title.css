@@ -1,0 +1,23 @@
+.st {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--t3);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.st::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.st i {
+    font-size: 11px;
+}

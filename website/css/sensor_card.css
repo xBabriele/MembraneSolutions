@@ -1,0 +1,61 @@
+.sc {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 13px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color .4s, background .4s;
+}
+
+.sc.ano {
+    border-color: var(--red) !important;
+    background: var(--red-glow);
+}
+
+.sc-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.sc-n {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.sc-v {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 24px;
+    line-height: 1;
+}
+
+.sc-u {
+    font-size: 11px;
+    color: var(--t2);
+}
+
+.sc-bw {
+    background: var(--bg-el);
+    height: 3px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.sc-b {
+    height: 100%;
+    border-radius: 2px;
+    transition: width .8s ease;
+}
+
+.sc-m {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    color: var(--t3);
+    font-family: 'Share Tech Mono', monospace;
+}
