@@ -1,7 +1,5 @@
 # MembraneSolutions
 
-![](./data/icon.png)
-
 Il sistema Membrane Solutions Gestionale 4.0 è una piattaforma software progettata per
 il monitoraggio e la gestione dei processi produttivi industriali. L’obiettivo principale
 è quello di centralizzare in un unico ambiente tutte le informazioni provenienti dalla
